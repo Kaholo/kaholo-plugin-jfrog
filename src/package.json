@@ -1,0 +1,11 @@
+{
+  "name": "pm-plugin-JfrogArtigactory",
+  "version": "1.0.0",
+  "description": "Wrapper for Artifactory and Bintray RESTful api",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Productionmap team (Roy Talyosef)",
+  "license": "ISC"
+}

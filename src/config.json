@@ -1,0 +1,73 @@
+{
+  "name": "Jfrog-Artifactory-Bintray-RESTApi",
+  "type": "executer",
+  "imgUrl": "logo.png",
+  "execProgram": "node",
+  "main": "app.js",
+  "version": "1.0.0",
+  "description": "Wrapper for Artifactory and Bintray RESTful api",
+  "methods": [
+    {
+      "name": "DEPLOY_AN_ARTIFACT",
+      "viewName": "deploy an artifact",
+      "params": [
+        {
+          "name": "AUTH",
+          "viewName": "authentication",
+          "type": "string"
+        },
+        {
+          "name": "DEPLOY_TO",
+          "viewName": "deploy to",
+          "type": "string"
+        },
+        {
+          "name": "FILE_PATH",
+          "viewName": "file path",
+          "type": "string"
+        }
+      ],
+      "actionString": "curl -u AUTH -X PUT 'DEPLOY_TO' -T FILE_PATH"
+    },
+    {
+      "name": "RETRIEVE_AN_ARTIFACT",
+      "viewName": "retrieve an artifact",
+      "params": [
+        {
+          "name": "AUTH",
+          "viewName": "authentication",
+          "type": "string"
+        },
+        {
+          "name": "ARTIFACT_PATH",
+          "viewName": "artifact url",
+          "type": "string"
+        },
+        {
+          "name": "DESTINATION_PATH",
+          "viewName": "save to",
+          "type": "string"
+        }
+
+      ],
+      "actionString": "curl -u AUTH -L 'ARTIFACT_PATH' -o DESTINATION_PATH"
+    },
+    {
+      "name": "DELETE_FROM_BINTRAY",
+      "viewName": "delete from bintray",
+      "params": [
+        {
+          "name": "AUTH",
+          "viewName": "authentication",
+          "type": "string"
+        },
+        {
+          "name": "PATH_TO_DELETE",
+          "viewName": "path to delete",
+          "type": "string"
+        }
+      ],
+      "actionString": "curl -u AUTH -X DELETE PATH_TO_DELETE"
+    }
+  ]
+}
