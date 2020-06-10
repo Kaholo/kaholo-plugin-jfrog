@@ -1,53 +1,52 @@
-const child_process = require("child_process");
+const fs = require("fs");
+const request = require('request');
 
-const DEPLOY_AN_ARTIFACT = (action) => {
-    return new Promise((resolve, reject) => {
-        const execString = `curl -u ${action.params.AUTH} -x PUT "${action.params.DEPLOY_TO}" -T ${action.params.FILE_PATH}`;
-        child_process.exec(execString, (error, stdout, stderr) => {
-            if (error) {
-                reject(`exec error: ${error}`);
-            }
-            if (stderr) {
-                console.log(`stderr: ${stderr}`);
-            }
-            return resolve(stdout);
-        });
-    });
+function deployArtifact(action, settings){
+    const urlParts = [action.params.uploadPath, ...(action.params.options || [])]
+    const requestOptions = {
+        method: 'PUT',
+        url : urlParts.join(';'),
+        multipart : [
+            { body: fs.createReadStream(action.params.artifactPath) }
+        ]
+    }
+
+    return makeReuqest(requestOptions, settings);
 };
 
-const RETRIEVE_AN_ARTIFACT = (action) => {
-    return new Promise((resolve, reject) => {
-        const execString = `curl -u ${action.params.AUTH} -L "${action.params.ARTIFACT_PATH}" -o ${action.params.DESTINATION_PATH}`;
-        child_process.exec(execString, (error, stdout, stderr) => {
-            if (error) {
-                reject(`exec error: ${error}`);
-            }
-            if (stderr) {
-                console.log(`stderr: ${stderr}`);
-            }
-            return resolve(stdout);
-        });
-    });
+function deleteItem(action, settings){
+
+    const requestOptions = {
+        method: 'DELETE',
+        url : action.params.pathToItem
+    }
+
+    return makeReuqest(requestOptions, settings);
 };
 
-const DELETE_FROM_BINTRAY = (action) => {
-    return new Promise((resolve, reject) => {
-        const execString = `curl -u ${action.params.AUTH} -X ${actions.params.DELETE}`;
-        child_process.exec(execString, (error, stdout, stderr) => {
-            if (error) {
-                reject(`exec error: ${error}`);
+function makeReuqest(requestOptions, settings){
+    requestOptions.url = `${settings.artifactoryBaseUrl}/artifactory/${requestOptions.url}`;
+    requestOptions.auth = {
+        user: settings.username,
+        pass: settings.password,
+        sendImmediately : true
+    };
+    // return Promise.reject(JSON.stringify(requestOptions));
+    return new Promise((resolve,reject)=>{
+        request(requestOptions,function (err, response, body) {
+            if(err){
+                return reject(err);
             }
-            if (stderr) {
-                console.log(`stderr: ${stderr}`);
+            if(response.statusCode < 200 || response.statusCode > 300){
+                return reject(response.message);
             }
-            return resolve(stdout);
+            resolve(response);
         });
-    });
-};
+    })
+}
 
 
 module.exports = {
-    DEPLOY_AN_ARTIFACT,
-    RETRIEVE_AN_ARTIFACT,
-    DELETE_FROM_BINTRAY
+    DEPLOY_AN_ARTIFACT: deployArtifact,
+    DELETE_FROM_BINTRAY : deleteItem
 };

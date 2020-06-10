@@ -1,73 +1,60 @@
-{
-  "name": "Jfrog-Artifactory-Bintray-RESTApi",
+ {
+  "name": "JFrogArtifactory",
   "type": "executer",
   "imgUrl": "logo.png",
   "execProgram": "node",
   "main": "app.js",
-  "version": "1.2.0",
-  "description": "Wrapper for Artifactory and Bintray RESTful api",
+  "version": "2.0.0",
+  "description": "Wrapper for JFrog Artifactory",
+  "settings": [
+    {
+      "name": "username",
+      "viewName": "Username",
+      "type": "string"
+    },
+    {
+      "name": "password",
+      "viewName": "Password",
+      "type": "vault"
+    },
+    {
+      "name": "artifactoryBaseUrl",
+      "viewName": "Artifactory URL",
+      "type": "string"
+    }
+  ],
   "methods": [
     {
       "name": "DEPLOY_AN_ARTIFACT",
-      "viewName": "deploy an artifact",
+      "viewName": "Deploy Artifact",
       "params": [
         {
-          "name": "AUTH",
-          "viewName": "authentication",
+          "name": "uploadPath",
+          "viewName": "Upload Path",
           "type": "string"
         },
         {
-          "name": "DEPLOY_TO",
-          "viewName": "deploy to",
+          "name": "artifactPath",
+          "viewName": "Artifact Path",
           "type": "string"
         },
         {
-          "name": "FILE_PATH",
-          "viewName": "file path",
+          "name": "options",
+          "viewName": "Options (Key-Value Array)",
           "type": "string"
         }
-      ],
-      "actionString": "curl -u AUTH -X PUT 'DEPLOY_TO' -T FILE_PATH"
-    },
-    {
-      "name": "RETRIEVE_AN_ARTIFACT",
-      "viewName": "retrieve an artifact",
-      "params": [
-        {
-          "name": "AUTH",
-          "viewName": "authentication",
-          "type": "string"
-        },
-        {
-          "name": "ARTIFACT_PATH",
-          "viewName": "artifact url",
-          "type": "string"
-        },
-        {
-          "name": "DESTINATION_PATH",
-          "viewName": "save to",
-          "type": "string"
-        }
-
-      ],
-      "actionString": "curl -u AUTH -L 'ARTIFACT_PATH' -o DESTINATION_PATH"
+      ]
     },
     {
       "name": "DELETE_FROM_BINTRAY",
-      "viewName": "delete from bintray",
+      "viewName": "Delete Item",
       "params": [
         {
-          "name": "AUTH",
-          "viewName": "authentication",
-          "type": "string"
-        },
-        {
-          "name": "PATH_TO_DELETE",
-          "viewName": "path to delete",
+          "name": "pathToItem",
+          "viewName": "Path to item",
           "type": "string"
         }
-      ],
-      "actionString": "curl -u AUTH -X DELETE PATH_TO_DELETE"
+      ]
     }
   ]
 }
