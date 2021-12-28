@@ -4,8 +4,9 @@
   "imgUrl": "logo.png",
   "execProgram": "node",
   "main": "app.js",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Wrapper for JFrog Artifactory",
+  "category": "ARTIFICATS",
   "settings": [
     {
       "name": "username",
