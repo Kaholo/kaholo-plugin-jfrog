@@ -11,7 +11,7 @@ function deployArtifact(action, settings){
         ]
     }
 
-    return makeReuqest(requestOptions, settings);
+    return makeRequest(requestOptions, settings);
 };
 
 function deleteItem(action, settings){
@@ -21,24 +21,23 @@ function deleteItem(action, settings){
         url : action.params.pathToItem
     }
 
-    return makeReuqest(requestOptions, settings);
+    return makeRequest(requestOptions, settings);
 };
 
-function makeReuqest(requestOptions, settings){
+function makeRequest(requestOptions, settings){
     requestOptions.url = `${settings.artifactoryBaseUrl}/artifactory/${requestOptions.url}`;
     requestOptions.auth = {
         user: settings.username,
         pass: settings.password,
         sendImmediately : true
     };
-    // return Promise.reject(JSON.stringify(requestOptions));
     return new Promise((resolve,reject)=>{
         request(requestOptions,function (err, response, body) {
             if(err){
                 return reject(err);
             }
-            if(response.statusCode < 200 || response.statusCode > 300){
-                return reject(response.message);
+            if(response.statusCode < 200 || response.statusCode >= 300){
+                return reject( `Request not successful: ${(response.body)}`);
             }
             resolve(response);
         });
