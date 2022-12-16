@@ -23,7 +23,7 @@ function deleteItem(action, settings){
 
     return makeRequest(requestOptions, settings);
 };
-
+// test test test
 function makeRequest(requestOptions, settings){
     requestOptions.url = `${settings.artifactoryBaseUrl}/artifactory/${requestOptions.url}`;
     requestOptions.auth = {
@@ -37,7 +37,8 @@ function makeRequest(requestOptions, settings){
                 return reject(err);
             }
             if(response.statusCode < 200 || response.statusCode >= 300){
-                return reject( `Request not successful: ${(response.body)}`);
+                // return reject( `Request not successful: ${(response.body)}`);
+                return reject( undefined);
             }
             resolve(response);
         });
