@@ -1,0 +1,93 @@
+{
+  "name": "JFrogArtifactory",
+  "viewName": "JFrog Artifactory",
+  "type": "executer",
+  "imgUrl": "logo.png",
+  "execProgram": "node",
+  "main": "app.js",
+  "version": "2.0.2",
+  "description": "JFrog Artifactory is a repository for artifacts, binaries, packages, and containers.",
+  "category": [
+    "Repository"
+  ],
+  "keywords": [
+    "jfrog",
+    "artifacts",
+    "repository",
+    "docker",
+    "image",
+    "jar",
+    "nexus",
+    "dependencies"
+  ],
+  "settings": [
+    {
+      "name": "username",
+      "viewName": "Username",
+      "type": "string",
+      "description": "Username for authentication with the JFrog Artifactory URL",
+      "required": true
+    },
+    {
+      "name": "password",
+      "viewName": "Access Token or Password",
+      "type": "vault",
+      "description": "A JWT token or password to authenticate with the specified Username",
+      "required": true
+    },
+    {
+      "name": "artifactoryBaseUrl",
+      "viewName": "Artifactory Base URL",
+      "description": "The base URL to the JFrog Artifactory server",
+      "required": true,
+      "type": "string",
+      "placeholder": "https://myjfrogaccount.jfrog.io/"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DEPLOY_AN_ARTIFACT",
+      "viewName": "Deploy Artifact",
+      "params": [
+        {
+          "name": "uploadPath",
+          "viewName": "Upload Path",
+          "type": "string",
+          "required": true,
+          "description": "Path to artifact in Artifactory",
+          "placeholder": "generic-local/myapp/myapp-1.0.0-SNAPSHOT.jar",
+          "learnUrl": "https://www.jfrog.com/confluence/display/JFROG/Package+Management"
+        },
+        {
+          "name": "artifactPath",
+          "viewName": "Artifact Path",
+          "type": "string",
+          "required": true,
+          "description": "Path to artifact on Kaholo Agent",
+          "placeholder": "myapp/target/myapp-1.0.0-SNAPSHOT.jar"
+        },
+        {
+          "name": "options",
+          "viewName": "Options",
+          "type": "string",
+          "required": false,
+          "description": "Key=Value pairs to specify additional HTTP upload options"
+        }
+      ]
+    },
+    {
+      "name": "DELETE_FROM_BINTRAY",
+      "viewName": "Delete Item",
+      "params": [
+        {
+          "name": "pathToItem",
+          "viewName": "Artifact Path",
+          "type": "string",
+          "required": true,
+          "description": "Path to artifact in Artifactory",
+          "placeholder": "generic-local/myapp/myapp-1.0.0-SNAPSHOT.jar"
+        }
+      ]
+    }
+  ]
+}
