@@ -1,27 +1,47 @@
- {
+{
   "name": "JFrogArtifactory",
+  "viewName": "JFrog Artifactory",
   "type": "executer",
   "imgUrl": "logo.png",
   "execProgram": "node",
   "main": "app.js",
-  "version": "2.0.1",
-  "description": "Wrapper for JFrog Artifactory",
-  "category": ["REGISTRY"],
+  "version": "2.0.2",
+  "description": "JFrog Artifactory is a repository for artifacts, binaries, packages, and containers.",
+  "category": [
+    "Repository"
+  ],
+  "keywords": [
+    "jfrog",
+    "artifacts",
+    "repository",
+    "docker",
+    "image",
+    "jar",
+    "nexus",
+    "dependencies"
+  ],
   "settings": [
     {
       "name": "username",
       "viewName": "Username",
-      "type": "string"
+      "type": "string",
+      "description": "Username for authentication with the JFrog Artifactory URL",
+      "required": true
     },
     {
       "name": "password",
-      "viewName": "Password",
-      "type": "vault"
+      "viewName": "Access Token or Password",
+      "type": "vault",
+      "description": "A JWT token or password to authenticate with the specified Username",
+      "required": true
     },
     {
       "name": "artifactoryBaseUrl",
-      "viewName": "Artifactory URL",
-      "type": "string"
+      "viewName": "Artifactory Base URL",
+      "description": "The base URL to the JFrog Artifactory server",
+      "required": true,
+      "type": "string",
+      "placeholder": "https://myjfrogaccount.jfrog.io/"
     }
   ],
   "methods": [
@@ -32,17 +52,26 @@
         {
           "name": "uploadPath",
           "viewName": "Upload Path",
-          "type": "string"
+          "type": "string",
+          "required": true,
+          "description": "Path to artifact in Artifactory",
+          "placeholder": "generic-local/myapp/myapp-1.0.0-SNAPSHOT.jar",
+          "learnUrl": "https://www.jfrog.com/confluence/display/JFROG/Package+Management"
         },
         {
           "name": "artifactPath",
           "viewName": "Artifact Path",
-          "type": "string"
+          "type": "string",
+          "required": true,
+          "description": "Path to artifact on Kaholo Agent",
+          "placeholder": "myapp/target/myapp-1.0.0-SNAPSHOT.jar"
         },
         {
           "name": "options",
-          "viewName": "Options (Key-Value Array)",
-          "type": "string"
+          "viewName": "Options",
+          "type": "string",
+          "required": false,
+          "description": "Key=Value pairs to specify additional HTTP upload options"
         }
       ]
     },
@@ -52,8 +81,11 @@
       "params": [
         {
           "name": "pathToItem",
-          "viewName": "Path to item",
-          "type": "string"
+          "viewName": "Artifact Path",
+          "type": "string",
+          "required": true,
+          "description": "Path to artifact in Artifactory",
+          "placeholder": "generic-local/myapp/myapp-1.0.0-SNAPSHOT.jar"
         }
       ]
     }
